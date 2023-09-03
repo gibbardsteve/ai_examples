@@ -1,0 +1,28 @@
+.idea/
+__pycache__/
+*.pyc
+*.pyo
+*.swp
+build/
+dist/
+.DS_Store
+*~
+/tests/fixtures/date_adjustment/testing_output.csv
+/tests/testing_output.csv
+.venv/
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+junit.xml
+
+# pyenv
+.python-version
