@@ -18,7 +18,7 @@ OPENAI_API_KEY=<your_key>
 
 Ensure your .env file is *never* checked in to source control, it needs to be added to the .gitignore to ensure this.
 
-example_two.py then uses the Open AI API ChatCompletion endpoint to send a message to ChatGPT and interrogate the response.
+example_two.py then uses the Open AI API ChatCompletion endpoint to send a message to ChatGPT and print the response.
 
 ```
 poetry run python example_two.py
