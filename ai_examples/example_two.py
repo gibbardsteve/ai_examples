@@ -21,7 +21,7 @@ response = openai.ChatCompletion.create(
     messages=[{"role": "user", "content": "Hello ChatGPT!"}],
 )
 
-# print structure
+# JSON reply structure
 # {
 #   "id": "chatcmpl-7xHKegP1246BrABCDE...xample",
 #   "object": "chat.completion",
