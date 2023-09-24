@@ -43,7 +43,7 @@ response = openai.ChatCompletion.create(
 #     "total_tokens": 25
 #   }
 # }
-print(response)
+logger.debug(response)
 
-# print the response
+# print the response message
 print(response["choices"][0]["message"]["content"])
