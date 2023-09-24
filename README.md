@@ -68,5 +68,35 @@ Replying....
 I'm sorry, could you please clarify which place or area you are referring to?
 ```
 
+## Example Four
+Upgrade the CLI assistant to retain context of the conversation.
+
+```
+poetry run python example_four.py
+```
+
+Example Output:
+```
+Command Line Assistant v2
+=========================
+1: Ask a question
+Q/q: Quit
+Enter choice: 1
+What is your question? 
+What is the largest city in Wales?
+Replying....
+Answer....
+The largest city in Wales is Cardiff.
+Do you have another question? (Y/y to continue, anything else to quit) 
+y
+
+
+What is your question? 
+How many people live there?
+Replying....
+Answer....
+As of the latest estimates in 2021, the population of Cardiff is approximately 498,660 people.
+Do you have another question? (Y/y to continue, anything else to quit) 
+```
 ## License
 See [LICENSE](LICENSE)
