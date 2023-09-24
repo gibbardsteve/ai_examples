@@ -24,5 +24,49 @@ example_two.py then uses the Open AI API ChatCompletion endpoint to send a messa
 poetry run python example_two.py
 ```
 
+## Example Three
+Builds upon the first two examples to create a simple CLI tool that asks a question of chatGPT
+and returns an answer.
+```
+poetry run python example_three.py
+```
+
+Example output:
+```
+Command Line Assistant
+======================
+1: Ask a question
+Q/q: Quit
+Enter choice: 1
+What is your question? 
+How many letters in the word red?
+Replying....
+There are 3 letters in the word "red".
+Do you have another question? (Y/y to continue, anything else to quit) 
+```
+
+### Limitations
+This example has a limitation that chatGPT will not remember the context of a conversation, as shown in the example below. Example Four will show how to retain context when querying ChatGPT.
+
+```
+Command Line Assistant
+======================
+1: Ask a question
+Q/q: Quit
+Enter choice: 1
+What is your question? 
+Which city in wales has the highest population?
+Replying....
+Cardiff is the city in Wales with the highest population.
+Do you have another question? (Y/y to continue, anything else to quit) 
+y
+
+
+What is your question? 
+How many people live there?
+Replying....
+I'm sorry, could you please clarify which place or area you are referring to?
+```
+
 ## License
 See [LICENSE](LICENSE)
