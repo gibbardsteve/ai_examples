@@ -49,5 +49,5 @@ def print_model_element(model_data: list, entry_id: str):
         logger.info(entry[entry_id])
 
 
-model_data = get_openai_models("OPENAI_KEY")
+model_data = get_openai_models("OPENAI_API_KEY")
 print_model_element(model_data["data"], "id")
