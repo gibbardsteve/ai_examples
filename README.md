@@ -98,5 +98,62 @@ Answer....
 As of the latest estimates in 2021, the population of Cardiff is approximately 498,660 people.
 Do you have another question? (Y/y to continue, anything else to quit) 
 ```
+
+## Example Five
+Upgrade the CLI assistant to calculate the token usage for a conversation.
+
+This example uses the tiktoken package calculate token usage for a conversation exchange with chatGPT
+
+```
+poetry run python example_five.py
+```
+
+```
+Command Line Assistant v3
+=========================
+1: Ask a question
+2: Calculate token usage
+Q/q: Quit
+Enter choice: 2
+What is your question? 
+What is the capital city of Wales?
+Replying....
+Tokens calculated
+---------------------------
+prompt: 15
+calc reply:8
+calc total tokens:23
+Token usage in reply
+---------------------
+prompt tokens: 15
+completion tokens: 8
+total tokens: 23
+Answer....
+The capital city of Wales is Cardiff.
+Do you have another question? (Y/y to continue, anything else to quit) 
+y
+
+
+What is your question? 
+How many people live there?
+Replying....
+Tokens calculated
+---------------------------
+prompt: 37
+calc reply:19
+calc total tokens:56
+Token usage in reply
+---------------------
+prompt tokens: 37
+completion tokens: 19
+total tokens: 56
+Answer....
+As of 2021, the estimated population of Cardiff is around 478,000 people.
+Do you have another question? (Y/y to continue, anything else to quit) 
+q
+Come back soon!
+```
+
+
 ## License
 See [LICENSE](LICENSE)
