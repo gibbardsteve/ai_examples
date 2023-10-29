@@ -154,6 +154,26 @@ q
 Come back soon!
 ```
 
+## Example Six
+Add a simple web based user interface using the streamlit package. This interface allows the user to ask a single question and display the answer.
+
+```
+poetry run streamlit run ai_examples/example_six.py
+```
+
+### Key Points
+Uses a simple streamlit dropdown and form to allow the user to either ask a question or ask a question and calculate token usage.
+
+Functions from prior examples are reused to trigger the requests to OpenAI and calculate tokens.
+
+A new function format_tokens is introduced to format the token useage as a string which streamlit appends to the llm answer and prints using st.markdown() 
+
+### Limitations
+Click 'clear answer' or refresh the browser to ask a new question
+
+This example does not provide a chain of conversation (i.e memory)
+
+Although a dropdown is provided, the example is limited to the gpt-3.5-turbo llm model use
 
 ## License
 See [LICENSE](LICENSE)
