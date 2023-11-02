@@ -161,6 +161,7 @@ Add a simple web based user interface using the streamlit package. This interfac
 poetry run streamlit run ai_examples/example_six.py
 ```
 
+![Example AI Chat Bot screen written with Streamlit and OPEN AI API](./images/Ex6_OpenAI_Streamlit_Basic.png)
 ### Key Points
 Uses a simple streamlit dropdown and form to allow the user to either ask a question or ask a question and calculate token usage.
 
@@ -174,6 +175,27 @@ Click 'clear answer' or refresh the browser to ask a new question
 This example does not provide a chain of conversation (i.e memory)
 
 Although a dropdown is provided, the example is limited to the gpt-3.5-turbo llm model use
+
+## Example Seven
+Use the streamlit chat functionality to provide ChatGPT like interface using the OPEN AI API. This code also shows how to change avatars from the streamlit default.
+
+```
+poetry run streamlit run ai_examples/example_seven.py
+```
+
+![Example AI Chat Application in Streamlit using OPEN AI API](./images/Ex7_OpenAI_Streamlit_Chatbot.png)
+### Key Points
+The code follows the example from the [Streamlit website](https://streamlit.io/generative-ai)
+
+If an API Key is not configured the app will display a message
+
+Session state is used to retain the message thread
+
+
+
+
+### Next Steps
+Consider adding an option to display the tokens used in the prompt and reply
 
 ## License
 See [LICENSE](LICENSE)
