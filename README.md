@@ -227,7 +227,7 @@ will cause the agent to reason:
 
 **StreamlitCallbackHandler** is used to write the Langchain agents thoughts back to streamlit so that the reasoning is visible to the user.
 
-![Example AI Chat Using a LangChain Agent to Reason and Select Appropriate Tools](./images/Langchain_Ex2_reasoning.png)
+![Example AI Chat Using a LangChain Agent to Reason and Select Appropriate Tools](./images/Langchain_Ex2_Reasoning.png)
 
 
 
