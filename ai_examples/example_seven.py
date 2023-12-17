@@ -226,6 +226,8 @@ if "messages" not in st.session_state:
         {"role": "assistant", "content": "What can I do for you today?"}
     ]
 
+print(st.session_state)
+
 # ----- DROPDOWN
 options = ["Ask Question", "Calculate Tokens"]
 ai_models = ["gpt-3.5-turbo"]
