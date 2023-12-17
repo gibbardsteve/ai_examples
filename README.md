@@ -191,11 +191,45 @@ If an API Key is not configured the app will display a message
 
 Session state is used to retain the message thread
 
-
-
-
 ### Next Steps
 Consider adding an option to display the tokens used in the prompt and reply
+
+# AI LangChain Examples
+LangChain is a framework that abstracts much of the setup required to interact with multiple LLMs (not specifically OpenAI, although these examples focus on OpenAI).
+
+All examples are under ai_examples/langchain_examples
+
+## Example One
+A simple question and answer Streamlit UI using Streamlit and LangChain with OpenAI.
+
+```
+poetry run streamlit run ai_examples/langchain_examples/example_one.py
+```
+
+## Example Two
+A chat based Streamlit UI example using a LangChain agent and custom tools to implement a simple RAG (Retireval Augmentation Generation) application.
+
+This example uses Serper to provide extarnal search for OpenAI, meaning the llm can look up current events.  The search tool is defined as a custom LangChain tool.  A serper API key will need to be generated at [serper.dev](https://serper.dev)
+
+A native LangChain tool **llm-math** is defined to enable the agent to perform calculations.  OpenAI is not reliable for mathematical calculations due to the way the language model uses word association to derive it's answers, by using a tool the agent can defer anything that requires a calculation to the [llm-math tool](https://python.langchain.com/cookbook#:~:text=the%20llmcheckerchain%20function.-,llm_math.ipynb,-Solve%20complex%20word).
+
+A custom Langchain tool is defined from a python function to show how bespoke code can be run as part of a LangChain Agent's reasoning chain. In this example a simple function that returns a random animal from a predefined list is defined as a LangChain tool. 
+
+Tools will allow the agent to use the OpenAI LLM to reason about the question being asked and choose the right tools to answer the question that is posed. For example asking:
+
+*Select a random animal and tell me a fun fact*
+
+will cause the agent to reason:
+
+*I need to get a random animal using the random animal generator tool.* 
+
+*Then I need to search for a fun fact about that animal using the search tool*
+
+**StreamlitCallbackHandler** is used to write the Langchain agents thoughts back to streamlit so that the reasoning is visible to the user.
+
+![Example AI Chat Using a LangChain Agent to Reason and Select Appropriate Tools](./images/Langchain_Ex2_reasoning.png)
+
+
 
 ## License
 See [LICENSE](LICENSE)
