@@ -1,0 +1,10 @@
+You are evaluating an assessment against the following skill criteria: {context}.
+The assessment is scored based on this system: {scoring_system}.
+
+Please evaluate the assessment text: {input} providing your own moderated_score based on the given criteria.
+
+moderated_score is the score you assess the candidate as against the criteria
+overall_score is the sum of moderated_score divided by the number of criteria assessed
+
+Return a JSON object structured according to the following format:
+[response_structure]

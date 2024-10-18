@@ -1,0 +1,35 @@
+{
+  "skills": {
+    "Communicating Between Technical & Non Technical": {
+      "assessees_score": 4,
+      "assessors_score": 4,
+      "moderated_score": 4,
+      "meets_criteria": "The assesssee effectively communicates complex statistical requirements to various stakeholders, ensuring understanding and collaboration throughout the software development lifecycle.",
+      "misses_criteria": "No significant misses noted; all aspects of communication and stakeholder management were well addressed."
+    },
+    "Functional & Non Functional Testing": {
+      "assessees_score": 4,
+      "assessors_score": 4,
+      "moderated_score": 4,
+      "meets_criteria": "The assesssee demonstrates a comprehensive approach to both functional and non-functional testing, integrating tests into the CI/CD pipeline and ensuring high coverage.",
+      "misses_criteria": "No notable misses; all testing aspects were thoroughly covered."
+    },
+    "Programming & Build (Software Engineering)": {
+      "assessees_score": 4,
+      "assessors_score": 4,
+      "moderated_score": 4,
+      "meets_criteria": "The assesssee leads the design and development of complex algorithms while ensuring code quality through effective practices and documentation.",
+      "misses_criteria": "No significant misses; contributions to code reviews and documentation were exemplary."
+    },
+    "Service Support": {
+      "assessees_score": 3,
+      "assessors_score": 3,
+      "moderated_score": 3,
+      "meets_criteria": "The assesssee manages service support effectively, implementing innovative solutions for issue reporting and logging.",
+      "misses_criteria": "Some areas for improvement in proactive monitoring and documentation processes were noted."
+    }
+  },
+  "summary": {
+    "overall_score": 3.5
+  }
+}

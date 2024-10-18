@@ -27,3 +27,5 @@ junit.xml
 
 # pyenv
 .python-version
+
+ai_examples/langchain_examples/data/assessment/exclude/
