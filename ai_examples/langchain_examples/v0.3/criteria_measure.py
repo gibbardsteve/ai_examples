@@ -141,8 +141,10 @@ def compare_assessment_to_criteria(criteria_vector_store, assessment_docs, scori
     # Create a chain to combine documents using the provided prompt
     combine_docs_chain = create_stuff_documents_chain(llm, prompt)
     
+    retriever = criteria_vector_store.as_retriever(search_type="similarity", return_source_documents=True)
+
     # Create the retrieval chain
-    rag_chain = create_retrieval_chain(criteria_vector_store.as_retriever(), combine_docs_chain)
+    rag_chain = create_retrieval_chain(retriever, combine_docs_chain)
 
     # Prepare the input for the chain
     input_data = {
@@ -164,7 +166,21 @@ def compare_assessment_to_criteria(criteria_vector_store, assessment_docs, scori
             print("RESPONSE FOLLOWS")
         print(f"RESPONSE:{response}")
 
-    return response['answer'] 
+# Extract citations from source documents
+    sources = response['source_documents']  # Metadata about where the information was retrieved
+    citations = []
+    for source in sources:
+        page = source.metadata.get('page', 'N/A')
+        source_info = f"(page {page})"
+        citations.append(source_info)
+
+    # Combine response with citations
+    result_with_citations = {
+        "answer": response['answer'],
+        "citations": citations
+    }
+
+    return result_with_citations
 
 def clean_response(comparison_result):
     if isinstance(comparison_result, str):
@@ -177,7 +193,7 @@ def clean_response(comparison_result):
             comparison_result = comparison_result.split("```")[1].strip()  # Get the JSON part
             comparison_result = comparison_result.split("json\n")[1].strip()  # Get the JSON part
 
-            if debug:
+            if debug is False:
                 print(comparison_result)
         else:
             raise ValueError("The comparison result does not contain valid JSON format.")
