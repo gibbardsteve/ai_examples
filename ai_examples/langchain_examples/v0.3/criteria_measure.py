@@ -97,7 +97,6 @@ def compare_assessment_to_criteria(criteria_docs, assessment_docs, scoring_syste
     assessment_texts = [doc.page_content for doc in assessment_docs]
 
     # Use FAISS to create a vector store with criteria embeddings
-    criteria_embeddings = embed_with_retry(criteria_texts, embeddings)
     criteria_vector_store = FAISS.from_documents(criteria_docs, embeddings)
 
     # Build prompt from config
