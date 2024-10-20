@@ -68,16 +68,22 @@ def embed_with_retry(texts, embeddings):
             else:
                 raise e  # Reraise other exceptions
 
-# Step 1: Load user-provided criteria document
-def load_criteria_document(criteria_pdf_path):
+# Embed and store the criteria once
+def embed_criteria(criteria_pdf_path):
     # Load the criteria PDF document
     loader = PyPDFLoader(criteria_pdf_path)
-    pages = loader.load_and_split()  # Split pages to analyze criteria
+    pages = loader.load_and_split()
 
     # Extract criteria text
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=CHUNK_SIZE, chunk_overlap=OVERLAP)
     criteria_docs = text_splitter.split_documents(pages)
-    return criteria_docs
+    
+    # Embed the criteria
+    embeddings = OpenAIEmbeddings()
+    criteria_vector_store = FAISS.from_documents(criteria_docs, embeddings)
+
+    return criteria_vector_store  # Store the criteria
+
 
 # Step 2: Upload and process the assessment
 def process_assessment(assessment_pdf_path):
@@ -87,17 +93,34 @@ def process_assessment(assessment_pdf_path):
     assessment_docs = text_splitter.split_documents(pages)
     return assessment_docs
 
+
+def process_multiple_assessments(criteria_vector_store, assessment_pdf_paths, scoring_system):
+    results = []
+
+    for i, assessment_pdf_path in enumerate(assessment_pdf_paths):
+
+        # Process each assessment
+        assessment_docs = process_assessment(assessment_pdf_path)
+
+        # Compare assessment with the pre-embedded criteria
+        result = compare_assessment_to_criteria(criteria_vector_store, assessment_docs, scoring_system)
+        result = clean_response(result)
+
+        # Append comma directly to result except for the last one
+        if i < len(assessment_pdf_paths) - 1:
+            result += ','
+
+        results.append(result)
+
+    return results
+
+
 # Step 3: Define the comparison function (NLP model)
-def compare_assessment_to_criteria(criteria_docs, assessment_docs, scoring_system):
-    # Embed both criteria and assessment using OpenAI embeddings
+def compare_assessment_to_criteria(criteria_vector_store, assessment_docs, scoring_system):
+ 
     embeddings = OpenAIEmbeddings()
 
-    # Extract text from documents for embedding
-    criteria_texts = [doc.page_content for doc in criteria_docs]
     assessment_texts = [doc.page_content for doc in assessment_docs]
-
-    # Use FAISS to create a vector store with criteria embeddings
-    criteria_vector_store = FAISS.from_documents(criteria_docs, embeddings)
 
     # Build prompt from config
     prompt = load_prompt_config("ai_examples/langchain_examples/v0.3/example_prompt.txt",
@@ -125,7 +148,7 @@ def compare_assessment_to_criteria(criteria_docs, assessment_docs, scoring_syste
     input_data = {
         "input": "\n".join(assessment_texts),
         "assessment": "\n".join(assessment_texts),
-        "context": "\n".join(criteria_texts),
+        "context": "managed by RAG",
         "scoring_system": scoring_system
     }
 
@@ -143,6 +166,33 @@ def compare_assessment_to_criteria(criteria_docs, assessment_docs, scoring_syste
 
     return response['answer'] 
 
+def clean_response(comparison_result):
+    if isinstance(comparison_result, str):
+     # Remove the surrounding backticks and extra spaces
+        comparison_result = comparison_result.strip()
+
+        # Check if it starts with ``` followed by a newline and json
+        if comparison_result.startswith("```json\n"):
+            # Extract the JSON part by splitting the string
+            comparison_result = comparison_result.split("```")[1].strip()  # Get the JSON part
+            comparison_result = comparison_result.split("json\n")[1].strip()  # Get the JSON part
+
+            if debug:
+                print(comparison_result)
+        else:
+            raise ValueError("The comparison result does not contain valid JSON format.")
+
+        try:
+            comparison_result = json.loads(comparison_result)
+        except json.JSONDecodeError as e:
+            raise ValueError(f"Failed to decode JSON: {e}")
+        
+    return json.dumps([{
+        "skills": comparison_result.get('skills'),
+        "summary": comparison_result.get('summary')
+    }], indent=4)
+
+    
 def generate_json_response(criteria, assessment, scoring_system):
     comparison_result = compare_assessment_to_criteria(criteria, assessment, scoring_system)
 
@@ -182,11 +232,9 @@ debug = False
 if __name__ == "__main__":
     # Define paths
     criteria_pdf = "ai_examples/langchain_examples/data/criteria/lead/LeadAssessmentRequirements.pdf"
-    assessment_pdf = "ai_examples/langchain_examples/data/assessment/lead/ChaswickJohnLeadSoftwareEngineer.pdf"
     
     # Load documents
-    criteria = load_criteria_document(criteria_pdf)
-    assessment = process_assessment(assessment_pdf)
+    criteria_vector = embed_criteria(criteria_pdf)
 
     # Define scoring system (for example, 1-4 scale)
     scoring_system = {
@@ -196,8 +244,16 @@ if __name__ == "__main__":
         "7": "Fully meets criteria"
     }
     
-    # Run the comparison and get JSON result
-    result_json = generate_json_response(criteria, assessment, scoring_system)
-    
-    # Output result
-    print(result_json)
+    # List of assessment PDF files
+    assessment_pdfs = [
+        "ai_examples/langchain_examples/data/assessment/lead/ChaswickJohnLeadSoftwareEngineer.pdf",
+        "ai_examples/langchain_examples/data/assessment/exclude/GibbardSteveGrade7SoftwareEngineer.pdf"
+    ]
+
+    # Compare multiple assessments against the criteria
+    results = process_multiple_assessments(criteria_vector, assessment_pdfs, scoring_system)
+
+
+    for result in results:
+        # Output result
+        print(result)
