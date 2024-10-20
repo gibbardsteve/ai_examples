@@ -190,10 +190,10 @@ if __name__ == "__main__":
 
     # Define scoring system (for example, 1-4 scale)
     scoring_system = {
-        "1": "Does not meet criteria",
-        "2": "Partially meets criteria",
-        "3": "Mostly meets criteria",
-        "4": "Fully meets criteria"
+        "4": "Does not meet criteria",
+        "5": "Partially meets criteria",
+        "6": "Mostly meets criteria",
+        "7": "Fully meets criteria"
     }
     
     # Run the comparison and get JSON result
